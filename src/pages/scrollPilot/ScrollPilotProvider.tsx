@@ -38,6 +38,7 @@ const ScrollPilotProvider: React.FC = () => {
     };
 
     return(hasLoaded ? <>
+    <h1>hello</h1>
         <p>globalValue1: {globalValue1}</p>
         <p>globalValue2: {globalValue2}</p>
         <p>globalValue3: {globalValue3}</p>

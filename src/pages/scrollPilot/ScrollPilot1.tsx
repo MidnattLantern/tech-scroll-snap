@@ -12,38 +12,59 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
     const [localLibrary, setLocalLibrary] = useState<(number | null)[]>([]);
 
     useEffect(() => {
-        setLocalLibrary([1, 3, 6, 2, -5, -2, 8, 8]);
+        setLocalLibrary([0, 1, -3, 7, 8]);
         setLocalValue1(globalValue1);
         setHasLoaded(true);
+
+//        const elementTest = document.getElementById("testy")
+//        console.log("test:", elementTest?.scrollHeight);
     }, [globalValue1]);
 
-    const scrollToElement = () => {
-        const element = document.getElementById("2");
-        if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-        }
-    }
+    const handleSetValue = (value: number | null, index: number ) => {
 
-    const handleSetValue = (value: number | null) => {
+        const scrollableDiv = document.getElementById((index - 2).toString());
+        if (scrollableDiv) {
+            scrollableDiv.scrollIntoView({behavior: "smooth"})
+        }
+
         setLocalValue1(value);
         setGlobalValue1(value);
     }
 
     return(hasLoaded ? <>
-    
-    <button onClick={() => {scrollToElement()}}>test</button>
 
-        <h1>Pilot 1</h1>
         <p>Local Value: {localValue1}</p>
 
-        <div className={Styles.ScrollContainer}>
-            <button onClick={() => handleSetValue(null)}>Clear</button>
-            {localLibrary.map((id, index) => (
-                <div key={`${id}-${index}`} id={(id ?? 'null').toString()}>
-                    <button id={index.toString()} onClick={() => {handleSetValue(id)}}>id: {id} {index}</button>
-                </div>
-            ))}
+    <div className={Styles.AlignScrollContainer}>
+
+        <div className={Styles.HighlighterFrame}>
+             
         </div>
+
+            <div className={Styles.ScrollContainer}>
+
+                <button id="-3" className={Styles.LibraryItem}/>
+                <button id="-2" className={Styles.LibraryItem}/>
+
+                <button id="-1" className={Styles.LibraryItem} onClick={() => handleSetValue(null, -1)}>
+                    <p>Clear</p>
+                </button>
+                {localLibrary.map((id, index) => (
+                    <div key={`${id}-${index}`} id={(id ?? 'null').toString()}>
+                        <button
+                            className={Styles.LibraryItem}
+                            id={index.toString()}
+                            onClick={() => {handleSetValue(id, index)}}
+                        >
+                            <p>{id} {index}</p>
+                        </button>
+                    </div>
+                ))}
+
+                <button className={Styles.LibraryItem}/>
+                <button className={Styles.LibraryItem}/>
+            </div>
+    </div>
 
     </> : <p>loading</p>)
 };

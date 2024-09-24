@@ -1,5 +1,6 @@
 h1,
 p{
+    font-family: var(--font);
     color: var(--white);
 }
 button{
@@ -11,9 +12,42 @@ button{
     flex-direction: column;
     align-items: center;
 }
+
+/* --- --- */
+.AlignScrollContainer{
+
+    border: 1px solid var(--white-offset);
+    border-left-width: 4px;
+    border-right-width: 4px;
+    width: 250px;
+    height: 250px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
 .ScrollContainer{
-    border: 1px solid red;
-    width: 200px;
-    height: 200px;
-    overflow: scroll;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.HighlighterFrame{
+    border: 1px solid var(--theme);
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    pointer-events: none;
+    z-index: 9;
+}
+/* ---^--- */
+
+.LibraryItem{
+    width: 50px;
+    min-height: 50px;
+    border: none;
+    background-color: var(--dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
 }
