@@ -4,18 +4,31 @@ p{
     color: var(--white);
 }
 button{
+    font-family: var(--font);
+    font-size: 20px;
+    color: var(--white);
     width: 100px;
     height: 50px;
+}
+button:hover{
+    color: var(--theme);
+    cursor: pointer;
 }
 .ProviderContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+.ClearIcon{
+    fill: var(--white);
+}
+.ClearIcon:hover{
+    fill: var(--theme);
+    cursor: pointer;
+}
 
 /* --- --- */
 .AlignScrollContainer{
-
     border: 1px solid var(--white-offset);
     border-left-width: 4px;
     border-right-width: 4px;
@@ -32,18 +45,22 @@ button{
     align-items: center;
 }
 .HighlighterFrame{
-    border: 1px solid var(--theme);
     position: absolute;
     width: 250px;
     height: 250px;
     pointer-events: none;
     z-index: 9;
 }
+.Highlighter{
+    fill: var(--white-offset);
+}
 /* ---^--- */
 
 .LibraryItem{
     width: 50px;
-    min-height: 50px;
+    height: 48px;
+    margin-top: 1px;
+    margin-bottom: 1px;
     border: none;
     background-color: var(--dark);
     display: flex;

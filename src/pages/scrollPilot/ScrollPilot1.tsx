@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Styles from "./ScrollPilot.module.css";
+import { ReactComponent as HighLighterAsset } from "../../assets/highlighter.svg";
+import { ReactComponent as ClearIcon} from "../../assets/clear-icon.svg";
 
 interface ScrollPilot1Props {
     globalValue1: number | null;
@@ -38,7 +40,7 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
     <div className={Styles.AlignScrollContainer}>
 
         <div className={Styles.HighlighterFrame}>
-             
+             <HighLighterAsset className={Styles.Highlighter}/>
         </div>
 
             <div className={Styles.ScrollContainer}>
@@ -47,7 +49,7 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
                 <button id="-2" className={Styles.LibraryItem}/>
 
                 <button id="-1" className={Styles.LibraryItem} onClick={() => handleSetValue(null, -1)}>
-                    <p>Clear</p>
+                    <ClearIcon className={Styles.ClearIcon}/>
                 </button>
                 {localLibrary.map((id, index) => (
                     <div key={`${id}-${index}`} id={(id ?? 'null').toString()}>
@@ -55,9 +57,7 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
                             className={Styles.LibraryItem}
                             id={index.toString()}
                             onClick={() => {handleSetValue(id, index)}}
-                        >
-                            <p>{id} {index}</p>
-                        </button>
+                        >{id}</button>
                     </div>
                 ))}
 
