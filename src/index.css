@@ -2,7 +2,7 @@
   --theme: rgb(215, 55, 55);
   --theme-secondary: #7691BB;
   --complementary: rgb(105, 95, 185);
-  --dark: rgb(33,31,35);
+  --dark: rgb(34,32,36);
   --edge: rgb(60,58,62);
   --white: rgb(210, 200, 200);
   --white-offset: rgb(245, 190, 175);
@@ -17,10 +17,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(28, 26, 30);
+  background-color: rgb(26, 24, 28);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+button{
+  border: 1px solid var(--edge);
+  border-left-width: 2px;
+  border-right-width: 2px;
+  background-color: var(--dark);
 }

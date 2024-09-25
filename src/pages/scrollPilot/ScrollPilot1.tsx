@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Styles from "./ScrollPilot.module.css";
 import { ReactComponent as HighLighterAsset } from "../../assets/highlighter.svg";
 import { ReactComponent as ClearIcon} from "../../assets/clear-icon.svg";
@@ -13,13 +13,43 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
     const [localValue1, setLocalValue1] = useState<number | null>(null);
     const [localLibrary, setLocalLibrary] = useState<(number | null)[]>([]);
 
+    // test
+    const scrollContainerRef = useRef(null);
+    const localLibraryItemsRef = useRef<(HTMLDivElement | null)[]>([]);
+    const [scrollLocation, setScrollLocation] = useState(0);
+
+    const handleScroll = () => {
+        if (scrollContainerRef.current) {
+            const container = scrollContainerRef.current;
+            const { scrollTop } = container;
+            setScrollLocation(scrollTop); // user's current scroll location
+        
+            localLibrary.forEach((value: number | null, index: number) => {
+                const item = localLibraryItemsRef.current[index]; // Access the specific item ref
+                if (item) {
+                    const { offsetTop } = item; // Retrieve specific information
+                    const closestValue = offsetTop - scrollTop - 100;
+                    if (closestValue < 2 && closestValue> -2) {
+                        console.log(value, "is in focus")
+                    };
+/*                    console.log("offsetTop", offsetTop);
+                    console.log("scrollTop", scrollTop);
+                    console.log("math test", closestValue);
+                    console.log("---");*/
+                };
+            });
+        };
+/*        if (localLibraryItemsRef.current) {
+            const item = localLibraryItemsRef.current;
+            console.log("item:", item);
+        };*/
+//        console.log("test2:", localLibrary);
+    };
+
     useEffect(() => {
-        setLocalLibrary([0, 1, -3, 7, 8]);
+        setLocalLibrary([0, 1, -3, 7, 8,]);
         setLocalValue1(globalValue1);
         setHasLoaded(true);
-
-//        const elementTest = document.getElementById("testy")
-//        console.log("test:", elementTest?.scrollHeight);
     }, [globalValue1]);
 
     const handleSetValue = (value: number | null, index: number ) => {
@@ -27,17 +57,16 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
         const scrollableDiv = document.getElementById((index - 2).toString());
         if (scrollableDiv) {
             scrollableDiv.scrollIntoView({behavior: "smooth"})
-        }
-
+        };
         setLocalValue1(value);
         setGlobalValue1(value);
-    }
+    };
 
     return(hasLoaded ? <>
 
         <p>Local Value: {localValue1}</p>
 
-    <div className={Styles.AlignScrollContainer}>
+    <div ref={scrollContainerRef} className={Styles.AlignScrollContainer}>
 
         <div className={Styles.HighlighterFrame}>
              <HighLighterAsset className={Styles.Highlighter}/>
@@ -52,7 +81,11 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
                     <ClearIcon className={Styles.ClearIcon}/>
                 </button>
                 {localLibrary.map((id, index) => (
-                    <div key={`${id}-${index}`} id={(id ?? 'null').toString()}>
+                    <div
+                    key={`${id}-${index}`}
+                    id={(id ?? 'null').toString()}
+                    ref={(el) => (localLibraryItemsRef.current[index] = el)}
+                    >
                         <button
                             className={Styles.LibraryItem}
                             id={index.toString()}
@@ -65,6 +98,9 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
                 <button className={Styles.LibraryItem}/>
             </div>
     </div>
+
+                <p>scrollLocation: {scrollLocation}</p>
+    <button onClick={() => {handleScroll()}}>test</button>
 
     </> : <p>loading</p>)
 };
