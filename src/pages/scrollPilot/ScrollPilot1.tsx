@@ -33,8 +33,9 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
                         console.log(value, "is in focus")
                     };
                     if (closestValue < 25 && closestValue > -26) {
-                        console.log("closest item", item);
-                    }
+                        console.log("closest item", item.id, "with index", index);
+                        handleSetValue(value, index);
+                    };
 //                    console.log("offsetTop", offsetTop);
 //                    console.log("scrollTop", scrollTop);
                     console.log(item, "distance:", closestValue);
@@ -104,7 +105,7 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
     </div>
 
                 <p>scrollLocation: {scrollLocation}</p>
-    <button onClick={() => {handleScroll()}}>test</button>
+    <button onClick={() => {handleScroll()}}>Check</button>
 
     </> : <p>loading</p>)
 };
