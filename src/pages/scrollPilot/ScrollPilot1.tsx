@@ -14,7 +14,7 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
     const [localLibrary, setLocalLibrary] = useState<(number | null)[]>([]);
 
     // test
-    const scrollContainerRef = useRef(null);
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const localLibraryItemsRef = useRef<(HTMLDivElement | null)[]>([]);
     const [scrollLocation, setScrollLocation] = useState(0);
 
@@ -36,25 +36,30 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
                         console.log("closest item", item.id, "with index", index);
                         handleSetValue(value, index);
                     };
-//                    console.log("offsetTop", offsetTop);
-//                    console.log("scrollTop", scrollTop);
-                    console.log(item, "distance:", closestValue);
-//                    console.log("---");
                 };
             });
-            console.log("--- ---");
         };
-/*        if (localLibraryItemsRef.current) {
-            const item = localLibraryItemsRef.current;
-            console.log("item:", item);
-        };*/
-//        console.log("test2:", localLibrary);
     };
 
     useEffect(() => {
         setLocalLibrary([0, 1, -3, 7, 8,]);
         setLocalValue1(globalValue1);
         setHasLoaded(true);
+
+                // Add the scroll event listener
+        const container = scrollContainerRef.current ;
+        const handleTest = () => {
+            console.log("Scroll detected");
+        };
+        if (container) {
+            container.addEventListener("scroll", handleTest);
+        }
+        return () => {
+            if (container) {
+                container.removeEventListener("scroll", handleTest);
+            }
+        };
+
     }, [globalValue1]);
 
     const handleSetValue = (value: number | null, index: number ) => {
