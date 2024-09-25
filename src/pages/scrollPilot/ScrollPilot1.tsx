@@ -42,21 +42,27 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
     };
 
     useEffect(() => {
-        setLocalLibrary([0, 1, -3, 7, 8,]);
+        setLocalLibrary([0, 1, -3, 7, 8, -9, 23]);
         setLocalValue1(globalValue1);
         setHasLoaded(true);
 
-                // Add the scroll event listener
-        const container = scrollContainerRef.current ;
-        const handleTest = () => {
-            console.log("Scroll detected");
+        const container = scrollContainerRef.current;
+        let timeoutId: ReturnType<typeof setTimeout>;
+
+        const scrollListener = () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            };
+            timeoutId = setTimeout(() => {
+                handleScroll();
+            }, 250);
         };
         if (container) {
-            container.addEventListener("scroll", handleTest);
+            container.addEventListener("scroll", scrollListener);
         }
         return () => {
             if (container) {
-                container.removeEventListener("scroll", handleTest);
+                container.removeEventListener("scroll", scrollListener);
             }
         };
 
