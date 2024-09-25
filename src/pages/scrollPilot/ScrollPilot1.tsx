@@ -29,15 +29,19 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
                 if (item) {
                     const { offsetTop } = item; // Retrieve specific information
                     const closestValue = offsetTop - scrollTop - 100;
-                    if (closestValue < 2 && closestValue> -2) {
+                    if (closestValue < 2 && closestValue > -2) {
                         console.log(value, "is in focus")
                     };
-/*                    console.log("offsetTop", offsetTop);
-                    console.log("scrollTop", scrollTop);
-                    console.log("math test", closestValue);
-                    console.log("---");*/
+                    if (closestValue < 25 && closestValue > -26) {
+                        console.log("closest item", item);
+                    }
+//                    console.log("offsetTop", offsetTop);
+//                    console.log("scrollTop", scrollTop);
+                    console.log(item, "distance:", closestValue);
+//                    console.log("---");
                 };
             });
+            console.log("--- ---");
         };
 /*        if (localLibraryItemsRef.current) {
             const item = localLibraryItemsRef.current;
