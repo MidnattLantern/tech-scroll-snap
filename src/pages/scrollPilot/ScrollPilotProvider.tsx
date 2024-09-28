@@ -6,9 +6,12 @@ const ScrollPilotProvider: React.FC = () => {
     const [globalValue1, setGlobalValue1] = useState<number | null>(null);
     const [globalValue2, setGlobalValue2] = useState<number | null>(null);
     const [globalValue3, setGlobalValue3] = useState<number | null>(null);
+    const [memoryIndex1, setMemoryIndex1] = useState<number>(0);
+    const [memoryIndex2, setMemoryIndex2] = useState<number>(0);
+    const [memoryIndex3, setMemoryIndex3] = useState<number>(0);
     const [focusPilot, setFocusPilot] = useState<number | null>(null);
-    const library1: (number | null)[] = [null, 9, 1, null, -3, 7, 8, -9, 23];
-    const library2: (number | null)[] = [89, null, null, -9, 23];
+    const library1: (number | null)[] = [9, 1, null, -3, 7, 8, -9, 23];
+    const library2: (number | null)[] = [89, null, -9, 23];
     const library3: (number | null)[] = [34, null];
 
     useEffect(() => {
@@ -33,21 +36,31 @@ const ScrollPilotProvider: React.FC = () => {
         setGlobalValue3(value);
     };
 
+    const handleSubmit = () => {
+        const submitData = {
+            globalValue1: globalValue1,
+            globalValue2: globalValue2,
+            globalValue3: globalValue3
+        };
+
+        // Log the JSON data to the console (or use it as needed)
+        console.log(submitData);
+    }
+
     const renderFocusedComponent = () => {
         switch(focusPilot){
             case 1:
-                return <ScrollPilot globalValue1={globalValue1} setGlobalValue1={handleSetGlobalValue1} library={library1}/>;
+                return <ScrollPilot globalValue={globalValue1} setGlobalValue={handleSetGlobalValue1} memoryIndex={memoryIndex1} setMemoryIndex={setMemoryIndex1} library={library1}/>;
             case 2:
-                return <ScrollPilot globalValue1={globalValue2} setGlobalValue1={handleSetGlobalValue2} library={library2}/>;
+                return <ScrollPilot globalValue={globalValue2} setGlobalValue={handleSetGlobalValue2} memoryIndex={memoryIndex2} setMemoryIndex={setMemoryIndex2} library={library2}/>;
             case 3:
-                return <ScrollPilot globalValue1={globalValue3} setGlobalValue1={handleSetGlobalValue3} library={library3}/>;
+                return <ScrollPilot globalValue={globalValue3} setGlobalValue={handleSetGlobalValue3} memoryIndex={memoryIndex3} setMemoryIndex={setMemoryIndex3} library={library3}/>;
             default:
-                return <h1> --- --- </h1>;
+                return <div className={Styles.UnselectedContainer}></div>;
         };
     };
 
     return(hasLoaded ? <>
-    <h1>hello</h1>
         <p>globalValue1: {globalValue1}</p>
         <p>globalValue2: {globalValue2}</p>
         <p>globalValue3: {globalValue3}</p>
@@ -56,6 +69,8 @@ const ScrollPilotProvider: React.FC = () => {
         <button onClick={() => {handleSetFocusPilot(2)}}>Pilot 2</button>
         <button onClick={() => {handleSetFocusPilot(3)}}>Pilot 3</button>
         <button onClick={() => {handleUnselect()}}>Unselect</button>
+        <br/>
+        <button className={Styles.SubmitButton} onClick={() => {handleSubmit()}}>{"Submit data (to the console)"}</button>
 
         <div className={Styles.ProviderContainer}>
             {renderFocusedComponent()}

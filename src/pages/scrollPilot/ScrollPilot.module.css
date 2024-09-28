@@ -27,6 +27,17 @@ button:hover{
     cursor: pointer;
 }
 
+.UnselectedContainer{
+    border: 1px solid var(--edge);
+    border-left-width: 4px;
+    border-right-width: 4px;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* --- --- */
 .AlignScrollContainer{
     border: 1px solid var(--white-offset);
@@ -67,4 +78,8 @@ button:hover{
     align-items: center;
     justify-content: center;
     pointer-events: all;
+}
+
+.SubmitButton{
+    width: 400px;
 }

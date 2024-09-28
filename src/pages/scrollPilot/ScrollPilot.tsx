@@ -4,44 +4,44 @@ import { ReactComponent as HighLighterAsset } from "../../assets/highlighter.svg
 import { ReactComponent as ClearIcon} from "../../assets/clear-icon.svg";
 
 interface ScrollPilotProps {
-    globalValue1: number | null;
-    setGlobalValue1: (value: number | null) => void; // Accepts a function that takes a number or null
-    library: (number | null)[]; // An array that can contain numbers or null values
+    globalValue: number | null;
+    setGlobalValue: (value: number | null) => void;
+    memoryIndex: number;
+    setMemoryIndex: (value: number) => void;
+    library: (number | null)[];
 };
 
-const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue1, setGlobalValue1, library }) => {
+const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, memoryIndex, setMemoryIndex, library }) => {
     const [hasLoaded, setHasLoaded] = useState(false);
-    const [localValue1, setLocalValue1] = useState<number | null>(null);
+    const [localValue, setLocalValue] = useState<number | null>(null);
     const [localLibrary, setLocalLibrary] = useState<(number | null)[]>([]);
 //    const [scrollLocation, setScrollLocation] = useState(0);
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const localLibraryItemsRef = useRef<(HTMLDivElement | null)[]>([]);
+    const [scrollToValue, setScrollToValue] = useState<boolean>(true);
 
     const handleSetValue = useCallback((value: number | null, index: number ) => {
         const scrollableDiv = document.getElementById((index - 2).toString());
         if (scrollableDiv) {
             scrollableDiv.scrollIntoView({behavior: "smooth"})
         };
-        setLocalValue1(value);
-        setGlobalValue1(value);
-    }, [setGlobalValue1]);
+        setLocalValue(value);
+        console.log("local value:", localValue);
+        setGlobalValue(value);
+        setMemoryIndex(index);
+    }, [setGlobalValue, localValue, setMemoryIndex]);
 
     const handleScroll = useCallback(() => {
         if (scrollContainerRef.current) {
             const container = scrollContainerRef.current;
             const { scrollTop } = container;
-//            setScrollLocation(scrollTop);
-        
+
             localLibrary.forEach((value: number | null, index: number) => {
-                const item = localLibraryItemsRef.current[index]; // Access the specific item ref
+                const item = localLibraryItemsRef.current[index];
                 if (item) {
-                    const { offsetTop } = item; // Retrieve specific information
+                    const { offsetTop } = item;
                     const closestValue = offsetTop - scrollTop - 100;
-//                    if (closestValue < 2 && closestValue > -2) {
-//                        console.log(value, "is in focus")
-//                    };
                     if (closestValue < 25 && closestValue > -26) {
-//                        console.log("closest item", item.id, "with index", index);
                         handleSetValue(value, index);
                     };
                 };
@@ -51,6 +51,11 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue1, setGlobalValue1
 
     useEffect(() => {
         if (hasLoaded) {
+            if(scrollToValue) {
+                handleSetValue(globalValue, memoryIndex);
+                setScrollToValue(false);
+            };
+
             const container = scrollContainerRef.current;
             let timeoutId: ReturnType<typeof setTimeout>;
     
@@ -72,17 +77,14 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue1, setGlobalValue1
             };
         };
 
-//        setLocalLibrary([null, 0, 1, -3, 7, 8, -9, 23]);
         setLocalLibrary(library);
-        setLocalValue1(globalValue1);
+        setLocalValue(globalValue);
+        console.log("local value:", localValue )
         setHasLoaded(true);
 
-
-    }, [globalValue1, handleScroll, hasLoaded]);
+    }, [globalValue, handleScroll, hasLoaded, library, localValue, scrollToValue, handleSetValue, memoryIndex]);
 
     return(hasLoaded ? <>
-
-        <p>Local Value: {localValue1}</p>
 
         <div ref={scrollContainerRef} className={Styles.AlignScrollContainer}>
 
