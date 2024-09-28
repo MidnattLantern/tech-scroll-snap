@@ -3,12 +3,13 @@ import Styles from "./ScrollPilot.module.css";
 import { ReactComponent as HighLighterAsset } from "../../assets/highlighter.svg";
 import { ReactComponent as ClearIcon} from "../../assets/clear-icon.svg";
 
-interface ScrollPilot1Props {
+interface ScrollPilotProps {
     globalValue1: number | null;
     setGlobalValue1: (value: number | null) => void; // Accepts a function that takes a number or null
+    library: (number | null)[]; // An array that can contain numbers or null values
 };
 
-const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValue1 }) => {
+const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue1, setGlobalValue1, library }) => {
     const [hasLoaded, setHasLoaded] = useState(false);
     const [localValue1, setLocalValue1] = useState<number | null>(null);
     const [localLibrary, setLocalLibrary] = useState<(number | null)[]>([]);
@@ -71,7 +72,8 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
             };
         };
 
-        setLocalLibrary([null, 0, 1, -3, 7, 8, -9, 23]);
+//        setLocalLibrary([null, 0, 1, -3, 7, 8, -9, 23]);
+        setLocalLibrary(library);
         setLocalValue1(globalValue1);
         setHasLoaded(true);
 
@@ -114,4 +116,4 @@ const ScrollPilot1: React.FC<ScrollPilot1Props> = ({ globalValue1, setGlobalValu
     </> : <p>loading</p>)
 };
 
-export default ScrollPilot1;
+export default ScrollPilot;
