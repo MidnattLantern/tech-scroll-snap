@@ -3,16 +3,16 @@ import { useEffect, useState } from "react";
 import ScrollPilot from "./ScrollPilot";
 const ScrollPilotProvider: React.FC = () => {
     const [hasLoaded, setHasLoaded] = useState(false);
-    const [globalValue1, setGlobalValue1] = useState<number | null>(null);
-    const [globalValue2, setGlobalValue2] = useState<number | null>(null);
-    const [globalValue3, setGlobalValue3] = useState<number | null>(null);
+    const [globalValue1, setGlobalValue1] = useState<number | null | string>(null);
+    const [globalValue2, setGlobalValue2] = useState<number | null | string>(null);
+    const [globalValue3, setGlobalValue3] = useState<number | null | string>(null);
     const [memoryIndex1, setMemoryIndex1] = useState<number>(0);
     const [memoryIndex2, setMemoryIndex2] = useState<number>(0);
     const [memoryIndex3, setMemoryIndex3] = useState<number>(0);
     const [focusPilot, setFocusPilot] = useState<number | null>(null);
-    const library1: (number | null)[] = [9, 1, null, -3, 7, 8, -9, 23];
-    const library2: (number | null)[] = [89, null, -9, 23];
-    const library3: (number | null)[] = [34, null];
+    const library1: (number | null | string)[] = [null, 10, 3, 2, 1, -1];
+    const library2: (number | null | string)[] = [null, "h", "s", "c", "d"];
+    const library3: (number | null | string)[] = [2, 1, -1];
 
     useEffect(() => {
         setHasLoaded(true);
@@ -26,13 +26,13 @@ const ScrollPilotProvider: React.FC = () => {
         setFocusPilot(target);
     };
 
-    const handleSetGlobalValue1 = (value: number | null) => {
+    const handleSetGlobalValue1 = (value: number | null | string) => {
         setGlobalValue1(value);
     };
-    const handleSetGlobalValue2 = (value: number | null) => {
+    const handleSetGlobalValue2 = (value: number | null | string) => {
         setGlobalValue2(value);
     };
-    const handleSetGlobalValue3 = (value: number | null) => {
+    const handleSetGlobalValue3 = (value: number | null | string) => {
         setGlobalValue3(value);
     };
 
@@ -75,6 +75,10 @@ const ScrollPilotProvider: React.FC = () => {
         <div className={Styles.ProviderContainer}>
             {renderFocusedComponent()}
         </div>
+
+        <p>memory 1 {memoryIndex1}</p>
+        <p>memory 2 {memoryIndex2}</p>
+        <p>memory 3 {memoryIndex3}</p>
 
         </> : <p>loading</p>)
 };

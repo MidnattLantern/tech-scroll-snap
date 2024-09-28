@@ -4,25 +4,26 @@ import { ReactComponent as HighLighterAsset } from "../../assets/highlighter.svg
 import { ReactComponent as ClearIcon} from "../../assets/clear-icon.svg";
 
 interface ScrollPilotProps {
-    globalValue: number | null;
-    setGlobalValue: (value: number | null) => void;
+    globalValue: number | null | string;
+    setGlobalValue: (value: number | null | string) => void;
     memoryIndex: number;
     setMemoryIndex: (value: number) => void;
-    library: (number | null)[];
+    library: (number | null | string)[];
 };
 
 const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, memoryIndex, setMemoryIndex, library }) => {
     const [hasLoaded, setHasLoaded] = useState(false);
-    const [localValue, setLocalValue] = useState<number | null>(null);
-    const [localLibrary, setLocalLibrary] = useState<(number | null)[]>([]);
+    const [localValue, setLocalValue] = useState<number | null | string>(null);
+    const [localLibrary, setLocalLibrary] = useState<(number | null | string)[]>([]);
 //    const [scrollLocation, setScrollLocation] = useState(0);
     const scrollContainerRef = useRef<HTMLDivElement | null>(null);
     const localLibraryItemsRef = useRef<(HTMLDivElement | null)[]>([]);
     const [scrollToValue, setScrollToValue] = useState<boolean>(true);
 
-    const handleSetValue = useCallback((value: number | null, index: number ) => {
+    const handleSetValue = useCallback((value: number | null | string, index: number ) => {
         const scrollableDiv = document.getElementById((index - 2).toString());
         if (scrollableDiv) {
+            console.log("scrollableDiv",scrollableDiv);
             scrollableDiv.scrollIntoView({behavior: "smooth"})
         };
         setLocalValue(value);
@@ -36,7 +37,7 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
             const container = scrollContainerRef.current;
             const { scrollTop } = container;
 
-            localLibrary.forEach((value: number | null, index: number) => {
+            localLibrary.forEach((value: number | null | string, index: number) => {
                 const item = localLibraryItemsRef.current[index];
                 if (item) {
                     const { offsetTop } = item;
@@ -51,6 +52,7 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
 
     useEffect(() => {
         if (hasLoaded) {
+
             if(scrollToValue) {
                 handleSetValue(globalValue, memoryIndex);
                 setScrollToValue(false);
@@ -77,14 +79,20 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
             };
         };
 
-        setLocalLibrary(library);
+        if (library.length !== 0) {
+            setLocalLibrary(library);
+        } else {
+            setLocalLibrary([null]); // better to have a null item than nothing at all
+        };
+
         setLocalValue(globalValue);
         console.log("local value:", localValue )
         setHasLoaded(true);
 
     }, [globalValue, handleScroll, hasLoaded, library, localValue, scrollToValue, handleSetValue, memoryIndex]);
 
-    return(hasLoaded ? <>
+    return(<>
+        {hasLoaded ? <>
 
         <div ref={scrollContainerRef} className={Styles.AlignScrollContainer}>
 
@@ -99,7 +107,7 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
                 {localLibrary.map((id, index) => (
                     <div
                     key={`${id}-${index}`}
-                    id={(id ?? 'null').toString()}
+                    id={(index ?? 'null').toString()}
                     ref={(el) => (localLibraryItemsRef.current[index] = el)}
                     >
                         <button
@@ -115,7 +123,8 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
             </div>
         </div>
 
-    </> : <p>loading</p>)
+    </> : <p>loading</p>}
+    </>)
 };
 
 export default ScrollPilot;

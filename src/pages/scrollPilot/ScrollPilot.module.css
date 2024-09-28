@@ -48,6 +48,15 @@ button:hover{
     overflow-y: scroll;
     overflow-x: hidden;
 }
+.LoadingContainer{
+    border: 1px solid var(--theme);
+    border-left-width: 4px;
+    border-right-width: 4px;
+    width: 250px;
+    height: 250px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
 .ScrollContainer{
     position: relative;
     overflow: visible;
