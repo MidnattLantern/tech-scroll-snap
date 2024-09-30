@@ -10,9 +10,9 @@ const ScrollPilotProvider: React.FC = () => {
     const [memoryIndex2, setMemoryIndex2] = useState<number>(0);
     const [memoryIndex3, setMemoryIndex3] = useState<number>(0);
     const [focusPilot, setFocusPilot] = useState<number | null>(null);
-    const library1: (number | null | string)[] = [null, 10, 3, 2, 1, -1];
-    const library2: (number | null | string)[] = [null, "h", "s", "c", "d"];
-    const library3: (number | null | string)[] = [2, 1, -1];
+    const library1: (number | null | string)[] = [null, 10, 3, 2, 1, 0, -1, null];
+    const library2: (number | null | string)[] = [null, "d", "h", "c", "s", null];
+    const library3: (number | null | string)[] = ["♦️", "♥️", null, "♠️", "♣️"];
 
     useEffect(() => {
         setHasLoaded(true);
@@ -36,16 +36,19 @@ const ScrollPilotProvider: React.FC = () => {
         setGlobalValue3(value);
     };
 
-    const handleSubmit = () => {
-        const submitData = {
-            globalValue1: globalValue1,
-            globalValue2: globalValue2,
-            globalValue3: globalValue3
-        };
+    const [tableData, setTableData] = useState<{ Key: string; Value: number | null | string }[]>([]);
 
-        // Log the JSON data to the console (or use it as needed)
-        console.log(submitData);
-    }
+    const handleSubmit = () => {
+
+        const jsonData = [
+            { Key: 'globalValue1', Value: globalValue1 },
+            { Key: 'globalValue2', Value: globalValue2 },
+            { Key: 'globalValue3', Value: globalValue3 },
+        ];
+
+        setTableData(jsonData);
+        console.log("Submitted data:", tableData);
+    };
 
     const renderFocusedComponent = () => {
         switch(focusPilot){
@@ -61,24 +64,32 @@ const ScrollPilotProvider: React.FC = () => {
     };
 
     return(hasLoaded ? <>
-        <p>globalValue1: {globalValue1}</p>
-        <p>globalValue2: {globalValue2}</p>
-        <p>globalValue3: {globalValue3}</p>
+        <p>Selection from Library 1: {globalValue1}</p>
+        <p>Selection from Library 2: {globalValue2}</p>
+        <p>Selection from Library 3: {globalValue3}</p>
 
-        <button onClick={() => {handleSetFocusPilot(1)}}>Pilot 1</button>
-        <button onClick={() => {handleSetFocusPilot(2)}}>Pilot 2</button>
-        <button onClick={() => {handleSetFocusPilot(3)}}>Pilot 3</button>
+        <button onClick={() => {handleSetFocusPilot(1)}}>Library 1</button>
+        <button onClick={() => {handleSetFocusPilot(2)}}>Library 2</button>
+        <button onClick={() => {handleSetFocusPilot(3)}}>Library 3</button>
         <button onClick={() => {handleUnselect()}}>Unselect</button>
         <br/>
-        <button className={Styles.SubmitButton} onClick={() => {handleSubmit()}}>{"Submit data (to the console)"}</button>
+        <button className={Styles.SubmitButton} onClick={() => {handleSubmit()}}>{"Submit data"}</button>
 
         <div className={Styles.ProviderContainer}>
             {renderFocusedComponent()}
         </div>
 
-        <p>memory 1 {memoryIndex1}</p>
-        <p>memory 2 {memoryIndex2}</p>
-        <p>memory 3 {memoryIndex3}</p>
+
+            {tableData.length !== 0 && (<>
+                <h1>Submitted data:</h1>
+                {tableData.map((id, item) => (
+                    <p key={item}>
+                        From library: {item + 1}: {id.Value}
+                    </p>
+                ))}
+                <p>Check the console for more details</p>
+            </>)}
+
 
         </> : <p>loading</p>)
 };

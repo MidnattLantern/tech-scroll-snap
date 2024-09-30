@@ -7,7 +7,7 @@ button{
     font-family: var(--font);
     font-size: 20px;
     color: var(--white);
-    width: 100px;
+    width: 125px;
     height: 50px;
 }
 button:hover{
@@ -19,7 +19,7 @@ button:hover{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: baseline;
+    justify-content: center;
 }
 .ClearIcon{
     fill: var(--white);
@@ -30,7 +30,7 @@ button:hover{
 }
 
 .UnselectedContainer{
-    border: 1px solid var(--edge);
+    border: 1px hidden var(--edge);
     border-left-width: 4px;
     border-right-width: 4px;
     width: 250px;
@@ -78,13 +78,13 @@ button:hover{
 }
 .HideHighlighter {
     opacity: 0;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.20s ease;
     visibility: hidden;
 }
 
 .Highlighter {
     opacity: 1; /* Fades in */
-    transition: opacity 0.25s ease;
+    transition: opacity 0.20s ease;
     visibility: visible;
     fill: var(--white-offset);
 }
@@ -104,5 +104,5 @@ button:hover{
 }
 
 .SubmitButton{
-    width: 400px;
+    width: 500px;
 }

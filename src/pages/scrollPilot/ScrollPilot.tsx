@@ -24,11 +24,11 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
     const handleSetValue = useCallback((value: number | null | string, index: number ) => {
         const scrollableDiv = document.getElementById((index - 2).toString());
         if (scrollableDiv) {
-            console.log("scrollableDiv",scrollableDiv);
+//            console.log("scrollableDiv",scrollableDiv);
             scrollableDiv.scrollIntoView({behavior: "smooth"})
         };
         setLocalValue(value);
-        console.log("local value:", localValue);
+//        console.log("local value:", localValue);
         setGlobalValue(value);
         setMemoryIndex(index);
     }, [setGlobalValue, localValue, setMemoryIndex]);
@@ -55,7 +55,7 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
         if (hasLoaded) {
             setTimeout(() => {
                 setShowHighlighter(true);
-            }, 250);
+            }, 400);
 
             if(scrollToValue) {
                 handleSetValue(globalValue, memoryIndex);
@@ -90,7 +90,7 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
         };
 
         setLocalValue(globalValue);
-        console.log("local value:", localValue);
+//        console.log("local value:", localValue);
         setHasLoaded(true);
 
     }, [globalValue, handleScroll, hasLoaded, library, localValue, scrollToValue, handleSetValue, memoryIndex]);
