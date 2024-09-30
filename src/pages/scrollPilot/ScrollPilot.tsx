@@ -13,6 +13,7 @@ interface ScrollPilotProps {
 
 const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, memoryIndex, setMemoryIndex, library }) => {
     const [hasLoaded, setHasLoaded] = useState(false);
+    const [showHighlighter, setShowHighlighter] = useState(false);
     const [localValue, setLocalValue] = useState<number | null | string>(null);
     const [localLibrary, setLocalLibrary] = useState<(number | null | string)[]>([]);
 //    const [scrollLocation, setScrollLocation] = useState(0);
@@ -52,6 +53,9 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
 
     useEffect(() => {
         if (hasLoaded) {
+            setTimeout(() => {
+                setShowHighlighter(true);
+            }, 250);
 
             if(scrollToValue) {
                 handleSetValue(globalValue, memoryIndex);
@@ -86,19 +90,19 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
         };
 
         setLocalValue(globalValue);
-        console.log("local value:", localValue )
+        console.log("local value:", localValue);
         setHasLoaded(true);
 
     }, [globalValue, handleScroll, hasLoaded, library, localValue, scrollToValue, handleSetValue, memoryIndex]);
 
     return(<>
-        {hasLoaded ? <>
-
-        <div ref={scrollContainerRef} className={Styles.AlignScrollContainer}>
+        <div ref={scrollContainerRef} className={`${hasLoaded ? Styles.AlignScrollContainer : Styles.LoadingContainer}`}>
 
             <div className={Styles.HighlighterFrame}>
-                <HighLighterAsset className={Styles.Highlighter}/>
+                <HighLighterAsset className={`${showHighlighter ? Styles.Highlighter : Styles.HideHighlighter}`}/>
             </div>
+
+            {hasLoaded ? <>
 
             <div className={Styles.ScrollContainer}>
 
@@ -120,10 +124,9 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
 
                 <button className={Styles.LibraryItem}/>
                 <button className={Styles.LibraryItem}/>
-            </div>
+                </div>
+        </> : null}
         </div>
-
-    </> : <p>loading</p>}
     </>)
 };
 
