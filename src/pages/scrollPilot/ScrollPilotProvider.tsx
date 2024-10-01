@@ -1,6 +1,9 @@
 import Styles from "./ScrollPilot.module.css";
 import { useEffect, useState } from "react";
 import ScrollPilot from "./ScrollPilot";
+import { ReactComponent as ProviderDecoratorLeft} from "../../assets/provider-decorator-left.svg";
+import { ReactComponent as ProviderDecoratorRight} from "../../assets/provider-decorator-right.svg";
+
 const ScrollPilotProvider: React.FC = () => {
     const [hasLoaded, setHasLoaded] = useState(false);
     const [globalValue1, setGlobalValue1] = useState<number | null | string>(null);
@@ -64,34 +67,57 @@ const ScrollPilotProvider: React.FC = () => {
     };
 
     return(hasLoaded ? <>
-        <p>Selection from Library 1: {globalValue1}</p>
-        <p>Selection from Library 2: {globalValue2}</p>
-        <p>Selection from Library 3: {globalValue3}</p>
 
-        <button onClick={() => {handleSetFocusPilot(1)}}>Library 1</button>
-        <button onClick={() => {handleSetFocusPilot(2)}}>Library 2</button>
-        <button onClick={() => {handleSetFocusPilot(3)}}>Library 3</button>
-        <button onClick={() => {handleUnselect()}}>Unselect</button>
-        <br/>
-        <button className={Styles.SubmitButton} onClick={() => {handleSubmit()}}>{"Submit data"}</button>
+        <div>
 
-        <div className={Styles.ProviderContainer}>
-            {renderFocusedComponent()}
+            <button className={Styles.SelectLibraryButton} onClick={() => {handleSetFocusPilot(1)}}>Library 1</button>
+            <button className={Styles.SelectLibraryButton} onClick={() => {handleSetFocusPilot(2)}}>Library 2</button>
+            <button className={Styles.SelectLibraryButton} onClick={() => {handleSetFocusPilot(3)}}>Library 3</button>
+
+            <div className={Styles.ProviderContainer}>
+                <div className={Styles.ProviderContainerDecoratorContainer}><ProviderDecoratorLeft className={Styles.ProviderContainerDecorator} /></div>
+                {renderFocusedComponent()}
+                <div className={Styles.ProviderContainerDecoratorContainer}><ProviderDecoratorRight className={Styles.ProviderContainerDecorator} /></div>
+            </div>
+
+            <button className={Styles.SubmitButton} onClick={() => {handleSubmit()}}>{"Submit data"}</button>
+
         </div>
 
+        <div className={Styles.StatusBar}>
+            <table className={Styles.GlobalValueDivision}>
+                <tr>
+                    <td className={Styles.StatusBarContent}>Selection from Library 1:</td>
+                    <td className={Styles.StatusBarContent}>{globalValue1 !== null ? globalValue1 : <>-</>}</td>
+                </tr>
+                <tr>
+                    <td className={Styles.StatusBarContent}>Selection from Library 2:</td>
+                    <td className={Styles.StatusBarContent}>{globalValue2 !== null ? globalValue2 : <>-</>}</td>
+                </tr>
+                <tr>
+                    <td className={Styles.StatusBarContent}>Selection from Library 3:</td>
+                    <td className={Styles.StatusBarContent}>{globalValue3 !== null ? globalValue3 : <>-</>}</td>
+                </tr>
+            </table>
 
-            {tableData.length !== 0 && (<>
-                <h1>Submitted data:</h1>
-                {tableData.map((id, item) => (
-                    <p key={item}>
-                        From library: {item + 1}: {id.Value}
-                    </p>
-                ))}
-                <p>Check the console for more details</p>
-            </>)}
+            <div className={Styles.AlignSubmittedDataText}>
+                <p className={Styles.StatusBarContent}>Submitted data:</p>
+            </div>
 
+            <table className={Styles.SubmittedDataDivision}>
+                    {tableData.length !== 0 && (<>
+                        {tableData.map((id, item) => (<>
+                            <tr key={item}>
+                                <td className={Styles.StatusBarContent}>From library:</td>
+                                <td className={Styles.StatusBarContent}>{item + 1}: {id.Value !== null ? id.Value : <>-</>}</td>
+                            </tr>
+                        </>))}
+                    </>)}
+            </table>
 
-        </> : <p>loading</p>)
+        </div>
+
+    </> : <p>loading</p>)
 };
 
 export default ScrollPilotProvider;

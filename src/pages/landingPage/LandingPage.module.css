@@ -1,0 +1,82 @@
+:root {
+    --theme: rgb(214, 99, 110);
+    --theme-secondary: #7691BB;
+    --complementary: rgb(105, 95, 185);
+    --dark: rgb(37,35,39);
+    --edge: rgb(60,58,62);
+    --white: rgb(210, 200, 200);
+    --white-offset: rgb(245, 190, 175);
+    --font: 'Noticia Text';
+    --theme-font: 'Ewert', cursive;
+}
+
+@keyframes pulse {
+    0% {
+        color: var(--white); /* Color 1 */
+    }
+    50% {
+        color: var(--white-offset); /* Color 2 */
+    }
+    100% {
+        color: var(--white); /* Back to Color 1 */
+    }
+}
+
+p{
+    color: var(--white-offset);
+    font-family: var(--font);
+}
+h1{
+    font-size: 50px;
+    color: var(--white-offset);
+    font-family: var(--font);
+}
+a{
+    color: var(--theme);
+}
+
+.Header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid var(--dark);
+    border-left-width: 7.5px;
+    border-right-width: 7.5px;
+    margin: 25px;
+}
+.MainViewContainer{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 25px;
+    height: 100%;
+}
+
+button{
+    font-family: var(--font);
+    color: var(--white);
+    border: 1px solid var(--edge);
+    border-left-width: 3px;
+    border-right-width: 3px;
+    background-color: var(--dark);
+    padding: 10px;
+    cursor: pointer;
+    width: 250px;
+    height: 55px;
+    font-size: 15px;
+    margin: 20px;
+    box-shadow: 0px 7.5px 15px rgba(14,10,18,0.25);
+}
+.VIPButton{
+    color: var(--white);
+    animation: pulse 5.0s infinite;
+    font-size: 20px;
+}
+
+button:hover,
+.VIPButton:hover{
+    animation: none;
+    color: var(--theme);
+    box-shadow: 0px 7.5px 15px rgba(14,10,18,1);
+}

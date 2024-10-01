@@ -31,7 +31,7 @@ const ScrollPilot: React.FC<ScrollPilotProps> = ({ globalValue, setGlobalValue, 
 //        console.log("local value:", localValue);
         setGlobalValue(value);
         setMemoryIndex(index);
-    }, [setGlobalValue, localValue, setMemoryIndex]);
+    }, [setGlobalValue, setMemoryIndex,]);
 
     const handleScroll = useCallback(() => {
         if (scrollContainerRef.current) {

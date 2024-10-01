@@ -1,26 +1,19 @@
-h1,
-p{
-    font-family: var(--font);
-    color: var(--white);
-}
-button{
-    font-family: var(--font);
-    font-size: 20px;
-    color: var(--white);
-    width: 125px;
-    height: 50px;
-}
-button:hover{
-    color: var(--theme);
-    cursor: pointer;
-}
 .ProviderContainer{
     height: 250px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin: 25px;
 }
+.ProviderContainerDecoratorContainer{
+    height: 250px;
+    width: 25px;
+}
+.ProviderContainerDecorator{
+    fill: var(--dark);
+}
+
 .ClearIcon{
     fill: var(--white);
 }
@@ -103,6 +96,55 @@ button:hover{
     pointer-events: all;
 }
 
-.SubmitButton{
-    width: 500px;
+.SelectLibraryButton{
+    width: 100px;
+    height: 45px;
+    margin: 5px;
 }
+
+/* --- --- */
+.StatusBar{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background-color: var(--dark);
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.GlobalValueDivision{
+    width: 33%;
+    padding-left: 150px;
+    height: 100%;
+    border-right: 1.5px solid var(--edge);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.StatusBarContent{
+    color: var(--white);
+    font-size: 12.5px;
+    margin: 0px;
+}
+.SubmittedDataDivision{
+    width: 22%;
+    padding-left: 50px;
+    height: 100%;
+    border-right: 1.5px solid var(--edge);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.AlignSubmittedDataText{
+margin-left: 50px;
+}
+.SubmitButton{
+    width: 100px;
+    height: 30px;
+    margin: 0px;
+    padding: 5px;
+    font-size: 12.5px;
+    margin-top: 7.5px;
+}
+/* ---^--- */
