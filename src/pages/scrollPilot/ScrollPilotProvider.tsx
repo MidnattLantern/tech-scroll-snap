@@ -100,9 +100,14 @@ const ScrollPilotProvider: React.FC = () => {
                 </tr>
             </table>
 
-            <div className={Styles.AlignSubmittedDataText}>
-                <p className={Styles.StatusBarContent}>Submitted data:</p>
-            </div>
+            <table className={Styles.AlignSubmittedDataText}>
+                <tr>
+                    <td className={Styles.StatusBarContent}>Submitted data:</td>
+                </tr>
+                <tr>
+                    <td className={Styles.StatusBarContent}>{"(More in the console)"}</td>
+                </tr>
+            </table>
 
             <table className={Styles.SubmittedDataDivision}>
                     {tableData.length !== 0 && (<>
@@ -113,6 +118,18 @@ const ScrollPilotProvider: React.FC = () => {
                             </tr>
                         </>))}
                     </>)}
+            </table>
+
+            <table className={Styles.EtcDivision}>
+                <tr>
+                    <td className={Styles.StatusBarContent}>Alma Isaksson, aka "Midnatt Lantern" - 2024</td>
+                </tr>
+                <tr>
+                    <td className={Styles.StatusBarContent}>Website: <a href="https://midnattlantern.github.io/ali_resume/" target="_blank" rel="noopener noreferrer">midnattlantern.github.io/ali_resume</a></td>
+                </tr>
+                <tr>
+                    <td className={Styles.StatusBarContent}>Repository: <a href="https://github.com/MidnattLantern/tech-scroll-snap/" target="_blank" rel="noopener noreferrer">github.com/MidnattLantern/tech-scroll-snap</a></td>
+                </tr>
             </table>
 
         </div>

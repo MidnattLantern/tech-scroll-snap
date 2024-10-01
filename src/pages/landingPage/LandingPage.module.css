@@ -25,11 +25,13 @@
 p{
     color: var(--white-offset);
     font-family: var(--font);
+    cursor: default;
 }
 h1{
     font-size: 50px;
-    color: var(--white-offset);
+    color: var(--white);
     font-family: var(--font);
+    cursor: default;
 }
 a{
     color: var(--theme);
@@ -40,10 +42,6 @@ a{
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border: 2.5px solid var(--dark);
-    border-left-width: 7.5px;
-    border-right-width: 7.5px;
-    margin: 25px;
 }
 .MainViewContainer{
     display: flex;

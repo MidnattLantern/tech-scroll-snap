@@ -131,7 +131,6 @@
     width: 22%;
     padding-left: 50px;
     height: 100%;
-    border-right: 1.5px solid var(--edge);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -146,5 +145,12 @@ margin-left: 50px;
     padding: 5px;
     font-size: 12.5px;
     margin-top: 7.5px;
+}
+.EtcDivision{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 50px;
+    border-left: 1.5px solid var(--edge);
 }
 /* ---^--- */
